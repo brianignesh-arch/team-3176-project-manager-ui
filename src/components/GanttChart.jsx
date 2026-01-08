@@ -76,8 +76,8 @@ const GanttChart = () => {
                             const blocked = isTaskBlocked(task, tasks);
 
                             return (
-                                <div key={task.id} className="flex border-b border-gray-700 hover:bg-gray-750 h-12 relative group">
-                                    <div className="w-48 flex-shrink-0 border-r border-gray-700 p-2 text-sm font-medium text-gray-200 truncate flex items-center sticky left-0 bg-gray-800 group-hover:bg-gray-750 z-10">
+                                <div key={task.id} className="flex border-b border-gray-700 hover:bg-gray-750 min-h-[3rem] relative group">
+                                    <div className="w-48 flex-shrink-0 border-r border-gray-700 p-2 text-sm font-medium text-gray-200 whitespace-normal break-words flex items-center sticky left-0 bg-gray-800 group-hover:bg-gray-750 z-10">
                                         {task.task}
                                     </div>
 
