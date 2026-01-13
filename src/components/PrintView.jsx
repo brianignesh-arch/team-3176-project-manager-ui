@@ -1,11 +1,25 @@
 import React, { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { getTasksSortedByDeadline, SUB_TEAM_COLORS } from '../data/tasks';
 import { useTasks } from '../context/TaskContext';
 import { format, parseISO, isValid } from 'date-fns';
 
 const PrintView = () => {
     const { tasks, loading, error } = useTasks();
-    const sortedTasks = useMemo(() => getTasksSortedByDeadline(tasks), [tasks]);
+    const location = useLocation();
+
+    const sortedTasks = useMemo(() => {
+        let allTasks = getTasksSortedByDeadline(tasks);
+
+        // Filter if specific tasks were selected
+        const selectedIds = location.state?.selectedTaskIds;
+        if (selectedIds && Array.isArray(selectedIds) && selectedIds.length > 0) {
+            const selectedSet = new Set(selectedIds);
+            allTasks = allTasks.filter(task => selectedSet.has(task.id));
+        }
+
+        return allTasks;
+    }, [tasks, location.state]);
 
     if (loading) return <div className="p-8 text-center text-gray-400">Loading...</div>;
     if (error) return <div className="p-8 text-center text-red-400">{error}</div>;
